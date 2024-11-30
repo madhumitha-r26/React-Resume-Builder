@@ -1,4 +1,11 @@
 label{
     font-weight: 400;
-    font-size: larger;
+    font-size: large;
+    text-align: left;
+}
+
+hr{
+    color: black;
+    margin: 15px 0px 15px 0px;
+    height: 5px;
 }

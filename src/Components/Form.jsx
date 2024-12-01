@@ -3,6 +3,7 @@ import "./Form.css";
 import { useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import { Delete } from "@mui/icons-material";
+import { Close } from "@mui/icons-material";
 
 const Form = () => {
   
@@ -26,23 +27,20 @@ const Form = () => {
   const [certificateForms, addCertificateForm, removeCertificateForm] = useFormList();
   const [volunteerForms, addVolunteerForm, removeVolunteerForm] = useFormList();
 
-  var ul=document.getElementById("si-container");
-  var item1=document.getElementById("si")
-  
-  function HookArray(){
-    const [si_items,set_si_items]=useState([])
+  var ul = document.getElementById("si-container");
+  var si_input = document.getElementById("si");
 
-    const addsi = () => {
-      set_si_items([...si_items,{
-        id:si_items.length,
-        value: item1.value
-      }])
-    }
-    
+  function add_si(){
+      var si_item = document.createElement("li");
+      si_item.innerHTML="<button type='button' onClick='remove_si()' className='mt-3 px-3 py-3 rounded-lg text-sm text-red-500 border border-red-500'>"+ si_input.value +" <Close></Close> </button>"
+      ul.append(si_item);
   }
 
+  function remove_si(e){
+    event.target.parentElement.remove();
+  }
 
-
+  
   return (
     <div className="pt-5">
   
@@ -405,8 +403,6 @@ const Form = () => {
           class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
         />
       </div>
-
-
       </form>
 
       </div>
@@ -493,7 +489,7 @@ const Form = () => {
    <div className="flex justify-between">
    <legend className="pt-3 text-left font-medium text-2xl underline">Skills and Interest</legend>
    <button type="button" 
-  
+    
    class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
  <AddIcon></AddIcon> ADD
 </button>
@@ -503,6 +499,7 @@ const Form = () => {
       <div class="flex flex-col md:flex-row pt-3">
       <input
           type="text" id="si"
+          onClick={() => add_si()}
           class="w-full md:w-full py-3 px-2 mt-3 mr-4 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
           placeholder="Enter Skills and Interest"/>
       </div>
@@ -510,7 +507,9 @@ const Form = () => {
     </fieldset>
 
     <ul id="si-container">
-   
+        <li> <button type='button'  onClick={() => remove_si()} className='mt-3 px-2 py-2 rounded-lg text-sm text-black-500'> HTML <Close></Close> </button></li>
+        <li> <button type='button'  onClick={() => remove_si()} className='mt-3 px-2 py-2 rounded-lg text-sm text-black-500'> CSS <Close></Close> </button></li>
+        <li> <button type='button'  onClick={() => remove_si()} className='mt-3 px-2 py-2 rounded-lg text-sm text-black-500'> JS <Close></Close> </button></li>
     </ul>
     <hr/>
 

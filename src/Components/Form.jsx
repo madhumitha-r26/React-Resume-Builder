@@ -27,18 +27,32 @@ const Form = () => {
   const [certificateForms, addCertificateForm, removeCertificateForm] = useFormList();
   const [volunteerForms, addVolunteerForm, removeVolunteerForm] = useFormList();
 
-  var ul = document.getElementById("si-container");
-  var si_input = document.getElementById("si");
+ 
+  const [addsivalue,setaddsivalue]=useState("")
+  const[sidata,setsidata]=useState([])
 
-  function add_si(){
-      var si_item = document.createElement("li");
-      si_item.innerHTML="<button type='button' onClick='remove_si()' className='mt-3 px-3 py-3 rounded-lg text-sm text-red-500 border border-red-500'>"+ si_input.value +" <Close></Close> </button>"
-      ul.append(si_item);
+  const add_si=()=>{
+      setsidata([...sidata,addsivalue]);
+      setaddsivalue("");
   }
 
   function remove_si(e){
     event.target.parentElement.remove();
   }
+
+  const [addahvalue,setaddahvalue]=useState("")
+  const[ahdata,setahdata]=useState([])
+
+  const add_ah=()=>{
+      setahdata([...ahdata,addahvalue]);
+      setaddahvalue("");
+  }
+
+  function remove_ah(e){
+    event.target.parentElement.remove();
+  }
+
+  
 
   
   return (
@@ -489,7 +503,7 @@ const Form = () => {
    <div className="flex justify-between">
    <legend className="pt-3 text-left font-medium text-2xl underline">Skills and Interest</legend>
    <button type="button" 
-    
+    onClick={() => add_si()}
    class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
  <AddIcon></AddIcon> ADD
 </button>
@@ -498,19 +512,33 @@ const Form = () => {
       <form className="skill">
       <div class="flex flex-col md:flex-row pt-3">
       <input
-          type="text" id="si"
-          onClick={() => add_si()}
+          type="text"
+          onChange={(e)=>setaddsivalue(e.target.value)}
+          value={addsivalue}
           class="w-full md:w-full py-3 px-2 mt-3 mr-4 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
           placeholder="Enter Skills and Interest"/>
       </div>
       </form>
     </fieldset>
 
-    <ul id="si-container">
-        <li> <button type='button'  onClick={() => remove_si()} className='mt-3 px-2 py-2 rounded-lg text-sm text-black-500'> HTML <Close></Close> </button></li>
-        <li> <button type='button'  onClick={() => remove_si()} className='mt-3 px-2 py-2 rounded-lg text-sm text-black-500'> CSS <Close></Close> </button></li>
-        <li> <button type='button'  onClick={() => remove_si()} className='mt-3 px-2 py-2 rounded-lg text-sm text-black-500'> JS <Close></Close> </button></li>
+<div id="si-container">
+<ul>
+        {
+          sidata.map((currsi,index)=>{
+            return(
+              <ul>
+                <li>
+                  <button type='button' 
+                  onClick={() => remove_si()} 
+                  className='mt-3 px-2 py-2 rounded-lg border border-gray-500 text-sm text-black-500'>  {currsi} <Close></Close> </button>
+                </li>
+              </ul>
+            )
+          })
+        }
     </ul>
+</div>
+
     <hr/>
 
   
@@ -520,7 +548,9 @@ const Form = () => {
    
    <div className="flex justify-between">
    <legend className="pt-3 text-left font-medium text-2xl underline">Awards and Highlights</legend>
-   <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
+   <button type="button" 
+   onClick={() => add_ah()}
+   class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
  <AddIcon></AddIcon> ADD
 </button>
    </div>
@@ -529,11 +559,32 @@ const Form = () => {
       <div class="flex flex-col md:flex-row pt-3">
       <input
           type="text"
+          onChange={(e)=>setaddahvalue(e.target.value)}
+          value={addahvalue}
           class="w-full md:w-full py-3 px-2 mt-3 mr-4 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
           placeholder="Enter Awards and Highlights"/>
       </div>
       </form>
     </fieldset>
+
+    <div id="ah-container">
+<ul>
+        {
+          ahdata.map((currah,index)=>{
+            return(
+              <ul>
+                <li>
+                  <button type='button' 
+                  onClick={() => remove_ah()} 
+                  className='mt-3 px-2 py-2 rounded-lg border border-gray-500 text-sm text-black-500'>  {currah} <Close></Close> </button>
+                </li>
+              </ul>
+            )
+          })
+        }
+    </ul>
+</div>
+
     <hr/>
 
 {/* ---------------------------------GENERATE BUTTON--------------------------------------------------- */}

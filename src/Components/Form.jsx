@@ -1,190 +1,264 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Form.css";
-import { useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
-import { Delete } from "@mui/icons-material";
-import { Close } from "@mui/icons-material";
+import { Delete, Close } from "@mui/icons-material";
 
 const Form = () => {
-  
   const useFormList = (initialState = [{ id: Date.now() }]) => {
     const [forms, setForms] = useState(initialState);
-  
+
     const addForm = () => {
       setForms([...forms, { id: Date.now() }]);
     };
-  
+
     const removeForm = (id) => {
       setForms(forms.filter((form) => form.id !== id));
     };
-  
+
     return [forms, addForm, removeForm];
   };
-  
+
   const [educationForms, addEducationForm, removeEducationForm] = useFormList();
   const [experienceForms, addExperienceForm, removeExperienceForm] = useFormList();
   const [projectForms, addProjectForm, removeProjectForm] = useFormList();
   const [certificateForms, addCertificateForm, removeCertificateForm] = useFormList();
   const [volunteerForms, addVolunteerForm, removeVolunteerForm] = useFormList();
 
- 
-  const [addsivalue,setaddsivalue]=useState("")
-  const[sidata,setsidata]=useState([])
+  const [formData, setFormData] = useState({
+    name: '',
+    jobTitle: '',
+    email: '',
+    phone: '',
+    careerObjective: '',
+    links: {
+      linkedin: '',
+      github: '',
+      website: '',
+      behance: ''
+    },
+    education: [],
+    experience: [],
+    projects: [],
+    certificates: [],
+    volunteering: [],
+    skills: [],
+    awards: []
+  });
 
-  const add_si=()=>{
-      setsidata([...sidata,addsivalue]);
+  const [addsivalue, setaddsivalue] = useState("");
+  const [sidata, setsidata] = useState([]);
+  const [addahvalue, setaddahvalue] = useState("");
+  const [ahdata, setahdata] = useState([]);
+  const [generatedResume, setGeneratedResume] = useState("");
+
+  // Handle input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const handleLinkChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      links: {
+        ...formData.links,
+        [name]: value
+      }
+    });
+  };
+
+  const handleGenerateResume = () => {
+    const { name, jobTitle, email, phone, careerObjective, links, education, experience, projects, certificates, volunteering, skills, awards } = formData;
+
+    // Format the education, experience, projects, certificates, and volunteering for better readability
+    const formatList = (list) => list.map(item => `<li>${item}</li>`).join('');
+
+    const resume = `
+      <h1 style="text-align:center">${name}</h1>
+      <p><strong>Job Title:</strong> ${jobTitle}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Phone:</strong> ${phone}</p>
+      <p><strong>Career Objective:</strong> ${careerObjective}</p>
+      <p><strong>LinkedIn:</strong> <a href="${links.linkedin}" target="_blank">${links.linkedin}</a></p>
+      <p><strong>GitHub:</strong> <a href="${links.github}" target="_blank">${links.github}</a></p>
+      <p><strong>Website:</strong> <a href="${links.website}" target="_blank">${links.website}</a></p>
+      <p><strong>Behance:</strong> <a href="${links.behance}" target="_blank">${links.behance}</a></p>
+      <h2>Education</h2>
+      <ul>${formatList(education)}</ul>
+      <h2>Experience</h2>
+      <ul>${formatList(experience)}</ul>
+      <h2>Projects</h2>
+      <ul>${formatList(projects)}</ul>
+      <h2> Certificates</h2>
+      <ul>${formatList(certificates)}</ul>
+      <h2>Volunteering</h2>
+      <ul>${formatList(volunteering)}</ul>
+      <h2>Skills</h2>
+      <p>${skills.join(', ')}</p>
+      <h2>Awards</h2>
+      <p>${awards.join(', ')}</p>
+    `;
+
+    setGeneratedResume(resume);
+  };
+
+  const add_si = () => {
+    if (addsivalue) {
+      setsidata([...sidata, addsivalue]);
       setaddsivalue("");
-  }
+    }
+  };
 
-  function remove_si(e){
-    event.target.parentElement.remove();
-  }
+  const remove_si = (index) => {
+    setsidata(sidata.filter((_, i) => i !== index));
+  };
 
-  const [addahvalue,setaddahvalue]=useState("")
-  const[ahdata,setahdata]=useState([])
-
-  const add_ah=()=>{
-      setahdata([...ahdata,addahvalue]);
+  const add_ah = () => {
+    if (addahvalue) {
+      setahdata([...ahdata, addahvalue]);
       setaddahvalue("");
-  }
+    }
+  };
 
-  function remove_ah(e){
-    event.target.parentElement.remove();
-  }
+  const remove_ah = (index) => {
+    setahdata(ahdata.filter((_, i) => i !== index));
+  };
 
-  const GenerateResume=()=>{
-    console.log("resume generated successfully")
-  }
-
-  
-
-  
   return (
     <div className="pt-5">
-  
-  {/* -------------------------------HEADING--------------------------------------------------------- */}
-   
-  <fieldset>
-      <legend className="pt-3 text-left font-medium text-2xl underline">Heading</legend>
-      <form className="heading">
-      <div className="grid grid-cols-1 md:grid-cols-4 pt-3 ">
-      <label className="mt-3">Name</label>
-      <input
-          type="text"
-          id="h-name"
-          class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-          placeholder="Your Name"
-        />
+      {/* -------------------------------HEADING--------------------------------------------------------- */}
+      <fieldset>
+        <legend className="pt-3 text-left font-medium text-2xl underline">Heading</legend>
+        <form className="heading">
+          <div className="grid grid-cols-1 md:grid-cols-4 pt-3 ">
+            <label className="mt-3">Name</label>
+            <input
+              type="text"
+              name="name"
+              onChange={handleInputChange}
+              className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+              placeholder="Your Name"
+            />
 
-        <label className="mt-3">Job Title</label>
-        <input
-          type="text"
-          id="h-jt"
-          className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-          placeholder="Your Job Title"
-        />
+            <label className="mt-3">Job Title</label>
+            <input
+              type="text"
+              name="jobTitle"
+              onChange={handleInputChange}
+              className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+              placeholder="Your Job Title"
+            />
 
-        <label className="mt-3">Email Id</label>
-        <input
-          type="email"
-          id="h-email"
-          className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-          placeholder="Your Email"
-        />
-        
-        <label className="mt-3">Phone Number</label>
-        <input
-          type="tel"
-          id="h-phone"
-          class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-          placeholder="1234-567-890"
-        />
-      </div>
+            <label className="mt-3">Email Id</label>
+            <input
+              type="email"
+              name="email"
+              onChange={handleInputChange}
+              className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+              placeholder="Your Email"
+            />
 
-      <div className="flex flex-col md:flex-row pt-3">
-                <label className="mt-3 mr-40">Career Objective</label>
-                <textarea
-                  type="text"
-                  className="w-full md:w-9/12 h-24 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
-                  placeholder="Enter Career Objective"
-                ></textarea>
-              </div>
-      
-      </form>
-    </fieldset>
-    <hr/>
-  
-    {/* -------------------------------LINKS--------------------------------------------------------- */}
-    <fieldset>
-      <legend className="pt-3 text-left font-medium text-2xl underline">Links</legend>
-      <form className="links">
-      <div className="grid grid-cols-1 md:grid-cols-4 pt-3 ">
-      <label className="mt-3">LinkedIn</label>
-      <input
-          type="url"
-          className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-          placeholder="https://www.linkedin.com/in/"
-        />
+            <label className="mt-3">Phone Number</label>
+            <input
+              type="tel"
+              name="phone"
+              onChange={handleInputChange}
+              className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+              placeholder="1234-567-890"
+            />
+          </div>
 
-        <label className="mt-3">GitHub</label>
-        <input
-          type="url"
-          className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-          placeholder="https://github.com/"
-        />
+          <div className="flex flex-col md:flex-row pt-3">
+            <label className="mt-3 mr-40">Career Objective</label>
+            <textarea
+              name="careerObjective"
+              onChange={handleInputChange}
+              className="w-full md:w-9/12 h-24 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+              placeholder="Enter Career Objective"
+            ></textarea>
+          </div>
+        </form>
+      </fieldset>
+      <hr />
 
-        <label className="mt-3">Website</label>
-        <input
-          type="url"
-          className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-          placeholder="https://www.yourwebsite.com/"
-        />
-        
-        <label className="mt-3">Behance</label>
-        <input
-          type="url"
-          className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-          placeholder="https://www.behance.net/"
-        />
-      </div>
-      </form>
-    </fieldset>
-    <hr/>
+      {/* -------------------------------LINKS--------------------------------------------------------- */}
+      <fieldset>
+        <legend className="pt-3 text-left font-medium text-2xl underline">Links</legend>
+        <form className="links">
+          <div className="grid grid-cols-1 md:grid-cols-4 pt-3 ">
+            <label className="mt-3">LinkedIn</label>
+            <input
+              type="url"
+              name="linkedin"
+              onChange={handleLinkChange}
+              className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+              placeholder="https://www.linkedin.com/in/"
+            />
 
-   {/* ------------------------------------EDUCATION---------------------------------------------------- */}
+            <label className="mt-3">GitHub</label>
+            <input
+              type="url"
+              name="github"
+              onChange={handleLinkChange}
+              className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+              placeholder="https://github.com/"
+            />
 
-   <fieldset>
-   
-   <div className="flex justify-between">
-   <legend className="pt-3 text-left font-medium text-2xl underline">Education</legend>
-   <button type="button" 
-   onClick={addEducationForm}
-   class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
- <AddIcon></AddIcon> ADD
-</button>
+            <label className="mt-3">Website</label>
+            <input
+              type="url"
+              name="website"
+              onChange={handleLinkChange}
+              className=" w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+              placeholder="https://www.yourwebsite.com/"
+            />
 
-   </div>
-   {educationForms.map((form, index) => (
+            <label className="mt-3">Behance</label>
+            <input
+              type="url"
+              name="behance"
+              onChange={handleLinkChange}
+              className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+              placeholder="https://www.behance.net/"
+            />
+          </div>
+        </form>
+      </fieldset>
+      <hr />
+
+      {/* ------------------------------------EDUCATION---------------------------------------------------- */}
+      <fieldset>
+        <div className="flex justify-between">
+          <legend className="pt-3 text-left font-medium text-2xl underline">Education</legend>
+          <button type="button" onClick={addEducationForm} className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-black text-white shadow-sm">
+            <AddIcon /> ADD
+          </button>
+        </div>
+        {educationForms.map((form, index) => (
           <div key={form.id}>
             <form className="education">
-            <div className="flex justify-end">
-           
-            
-            {educationForms.length > 1 && (
-              <button
-                type="button"
-                onClick={() => removeEducationForm(form.id)}
-                className="mt-3 px-3 py-3 rounded-lg text-sm text-red-500 border border-red-500"
-              > <Delete></Delete>
-                Delete
-              </button>
-            )}
-            </div>
-            
+              <div className="flex justify-end">
+                {educationForms.length > 1 && (
+                  <button type="button" onClick={() => removeEducationForm(form.id)} className="mt-3 px-3 py-3 rounded-lg text-sm text-red-500 border border-red-500">
+                    <Delete /> Delete
+                  </button>
+                )}
+              </div>
+
               <div className="flex flex-col md:flex-row pt-3">
                 <label className="mt-3 mr-24">University</label>
                 <input
                   type="text"
+                  name={`education[${index}].university`}
+                  onChange={(e) => {
+                    const newEducation = [...formData.education];
+                    newEducation[index] = { ...newEducation[index], university: e.target.value };
+                    setFormData({ ...formData, education: newEducation });
+                  }}
                   className="w-full md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
                   placeholder="Enter University"
                 />
@@ -193,11 +267,25 @@ const Form = () => {
                 <label className="mt-3">Degree</label>
                 <input
                   type="text"
+                  name={`education[${index}].degree`}
+                  onChange={(e) => {
+                    const newEducation = [...formData.education];
+                    newEducation[index] = { ...newEducation[index], degree: e.target.value };
+                    setFormData({ ...formData, education: newEducation });
+                  }}
                   className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
                   placeholder="Enter Degree"
                 />
                 <label className="mt-3">Grade</label>
-                <select className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm">
+                <select
+                  name={`education[${index}].grade`}
+                  onChange={(e) => {
+                    const newEducation = [...formData.education];
+                    newEducation[index] = { ...newEducation[index], grade: e.target.value };
+                    setFormData({ ...formData, education: newEducation });
+                  }}
+                  className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+                >
                   <option>- Select -</option>
                   <option>O</option>
                   <option>A</option>
@@ -210,414 +298,464 @@ const Form = () => {
                 <label className="mt-3">Start-Date</label>
                 <input
                   type="month"
+                  name={`education[${index}].startDate`}
+                  onChange={(e) => {
+                    const newEducation = [...formData.education];
+                    newEducation[index] = { ...newEducation[index], startDate: e.target.value };
+                    setFormData({ ...formData, education: newEducation });
+                  }}
                   className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
                 />
                 <label className="mt-3">End-Date</label>
                 <input
                   type="month"
+                  name={`education[${index}].endDate`}
+                  onChange={(e) => {
+                    const newEducation = [...formData.education];
+                    newEducation[index] = { ...newEducation[index], endDate: e.target.value };
+                    setFormData({ ...formData, education: newEducation });
+                  }}
                   className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
                 />
               </div>
             </form>
-         
           </div>
         ))}
+      </fieldset>
+      <hr />
 
-    </fieldset>
-    <hr/>
+      {/* ------------------------------------EXPERIENCE---------------------------------------------------- */}
+      <fieldset>
+        <div className="flex justify-between">
+          <legend className="pt-3 text-left font-medium text-2xl underline">Experience</legend>
+          <button type="button" onClick={addExperienceForm} className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-black text-white shadow-sm">
+            <AddIcon /> ADD
+          </button>
+        </div>
 
-   {/* ------------------------------------EXPERIENCE---------------------------------------------------- */}
-
-   <fieldset>
-   
-   <div className="flex justify-between">
-   <legend className="pt-3 text-left font-medium text-2xl underline">Experience</legend>
-   <button type="button" 
-   onClick={addExperienceForm}
-   className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
- <AddIcon></AddIcon> ADD
-</button>
-   </div>
-
-   {experienceForms.map((form, index) => (
+        {experienceForms.map((form, index) => (
           <div key={form.id}>
             <form className="experience">
-            <div className="flex justify-end">
-            {experienceForms.length > 1 && (
-              <button
-                type="button"
-                onClick={() => removeExperienceForm(form.id)}
-                className="mt-3 px-3 py-3 rounded-lg text-sm text-red-500 border border-red-500"
-              > <Delete></Delete>
-                Delete
-              </button>
-            )}
-            </div>
-            
-            <div className="flex flex-col md:flex-row pt-3">
-  <label className="mt-3 mr-24">Company</label>
-  <input
-      type="text"
-      class="w-full md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-      placeholder="Enter Company Name"
-    />
-  </div>
-  <div className="flex flex-col md:flex-row pt-3">
-  <label className="mt-3 mr-28">Job Role</label>
-  <input
-      type="text"
-      class="w-full md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-      placeholder="Enter Job Role"
-    />
-  </div>
-  <div className="flex flex-col md:flex-row pt-3">
-  <label className="mt-3 mr-20">Description</label>
-  <textarea
-      type="text"
-      class="w-full h-1/2 md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-      placeholder="Enter Job Description">       
-       </textarea>
-  </div>
-  <div className="grid grid-cols-1 md:grid-cols-4 pt-3 ">
+              <div className="flex justify-end">
+                {experienceForms.length > 1 && (
+                  <button type="button" onClick={() => removeExperienceForm(form.id)} className="mt-3 px-3 py-3 rounded-lg text-sm text-red-500 border border-red-500">
+                    <Delete /> Delete
+                  </button>
+                )}
+              </div>
 
-    <label className="mt-3">Start-Date</label>
-    <input
-      type="month"
-      class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-    />
-    
-    <label className="mt-3">End-Date</label>
-    <input
-      type="month"
-      class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-    />
-  </div>  
-             
+              <div className="flex flex-col md:flex-row pt-3">
+                <label className="mt-3 mr-24">Company</label>
+                <input
+                  type="text"
+                  name={`experience[${index}].company`}
+                  onChange={(e) => {
+                    const newExperience = [...formData.experience];
+                    newExperience[index] = { ...newExperience[index], company: e.target.value };
+                    setFormData({ ...formData, experience: newExperience });
+                  }}
+                  className="w-full md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+                  placeholder="Enter Company Name"
+                />
+              </div>
+              <div className="flex flex-col md:flex-row pt-3">
+                <label className="mt-3 mr-28">Job Role</label>
+                <input
+                  type="text"
+                  name={`experience[${index}].jobRole`}
+                  onChange={(e) => {
+                    const newExperience = [...formData.experience];
+                    newExperience[index] = { ...newExperience[index], jobRole: e.target.value };
+                    setFormData({ ...formData, experience: newExperience });
+                  }}
+                  className="w-full md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+                  placeholder="Enter Job Role"
+                />
+              </div>
+              <div className="flex flex-col md:flex-row pt-3">
+                <label className="mt-3 mr-20">Description</label>
+                <textarea
+                  type="text"
+                  name={`experience[${index}].description`}
+                  onChange={(e) => {
+                    const newExperience = [...formData.experience];
+                    newExperience[index] = { ...newExperience[index], description: e.target.value };
+                    setFormData({ ...formData, experience: newExperience });
+                  }}
+                  className="w-full h-1/2 md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+                  placeholder="Enter Job Description"
+                />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-4 pt-3 ">
+                <label className="mt-3">Start-Date</label>
+                <input
+                  type="month"
+                  name={`experience[${index}].startDate`}
+                  onChange={(e) => {
+                    const newExperience = [...formData.experience];
+                    newExperience[index] = { ...newExperience[index], startDate: e.target.value };
+                    setFormData({ ...formData, experience: newExperience });
+                  }}
+                  className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+                />
+                <label className="mt-3">End-Date</label>
+                <input
+                  type="month"
+                  name={`experience[${index}].endDate`}
+                  onChange={(e) => {
+                    const newExperience = [...formData.experience];
+                    newExperience [index] = { ...newExperience[index], endDate: e.target.value };
+                    setFormData({ ...formData, experience: newExperience });
+                  }}
+                  className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+                />
+              </div>
             </form>
-         
           </div>
         ))}
-      
-    </fieldset>
-    <hr/>
+      </fieldset>
+      <hr />
 
-   {/* ------------------------------------PROJECTS---------------------------------------------------- */}
+      {/* ------------------------------------PROJECTS---------------------------------------------------- */}
+      <fieldset>
+        <div className="flex justify-between">
+          <legend className="pt-3 text-left font-medium text-2xl underline">Projects</legend>
+          <button type="button" onClick={addProjectForm} className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-black text-white shadow-sm">
+            <AddIcon /> ADD
+          </button>
+        </div>
 
-    <fieldset>
-    <div className="flex justify-between">
-   <legend className="pt-3 text-left font-medium text-2xl underline">Projects</legend>
-   <button type="button" 
-   onClick={addProjectForm}
-   className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
- <AddIcon></AddIcon> ADD
-</button>
-   </div>
+        {projectForms.map((form, index) => (
+          <div key={form.id}>
+            <form className="projects">
+              <div className="flex justify-end">
+                {projectForms.length > 1 && (
+                  <button type="button" onClick={() => removeProjectForm(form.id)} className="mt-3 px-3 py-3 rounded-lg text-sm text-red-500 border border-red-500">
+                    <Delete /> Delete
+                  </button>
+                )}
+              </div>
+              <div className="flex flex-col md:flex-row pt-3">
+                <label className="mt-3 mr-20">Project Title</label>
+                <input
+                  type="text"
+                  name={`projects[${index}].title`}
+                  onChange={(e) => {
+                    const newProjects = [...formData.projects];
+                    newProjects[index] = { ...newProjects[index], title: e.target.value };
+                    setFormData({ ...formData, projects: newProjects });
+                  }}
+                  className="w-full md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+                  placeholder="Enter Project Title"
+                />
+              </div>
+              <div className="flex flex-col md:flex-row pt-3">
+                <label className="mt-3 mr-20">Description</label>
+                <textarea
+                  type="text"
+                  name={`projects[${index}].description`}
+                  onChange={(e) => {
+                    const newProjects = [...formData.projects];
+                    newProjects[index] = { ...newProjects[index], description: e.target.value };
+                    setFormData({ ...formData, projects: newProjects });
+                  }}
+                  className="w-full h-1/2 md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+                  placeholder="Enter Project Description"
+                />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-4 pt-3 ">
+                <label className="mt-3">Start-Date</label>
+                <input
+                  type="month"
+                  name={`projects[${index}].startDate`}
+                  onChange={(e) => {
+                    const newProjects = [...formData.projects];
+                    newProjects[index] = { ...newProjects[index], startDate: e.target.value };
+                    setFormData({ ...formData, projects: newProjects });
+                  }}
+                  className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+                />
+                <label className="mt-3">End-Date</label>
+                <input
+                  type="month"
+                  name={`projects[${index}].endDate`}
+                  onChange={(e) => {
+                    const newProjects = [...formData.projects];
+                    newProjects[index] = { ...newProjects[index], endDate: e.target.value };
+                    setFormData({ ...formData, projects: newProjects });
+                  }}
+                  className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+                />
+              </div>
+            </form>
+          </div>
+        ))}
+      </fieldset>
+      <hr />
 
-   {projectForms.map((form, index) => (
-    <div key={form.id}>
-      <form className="projects">
-      <div className="flex justify-end">
-            {projectForms.length > 1 && (
-              <button
-                type="button"
-                onClick={() => removeProjectForm(form.id)}
-                className="mt-3 px-3 py-3 rounded-lg text-sm text-red-500 border border-red-500"
-              > <Delete></Delete>
-                Delete
+      {/* ------------------------------------CERTIFICATIONS---------------------------------------------------- */}
+      <fieldset>
+        <div className="flex justify-between">
+          <legend className="pt-3 text-left font-medium text-2xl underline">Certifications</legend>
+          <button type="button" onClick={addCertificateForm} className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-black text-white shadow-sm hover ```javascript
+:bg-gray-50">
+            <AddIcon /> ADD
+          </button>
+        </div>
+        {certificateForms.map((form, index) => (
+          <div key={form.id}>
+            <form className="certificate">
+              <div className="flex justify-end">
+                {certificateForms.length > 1 && (
+                  <button type="button" onClick={() => removeCertificateForm(form.id)} className="mt-3 px-3 py-3 rounded-lg text-sm text-red-500 border border-red-500">
+                    <Delete /> Delete
+                  </button>
+                )}
+              </div>
+              <div className="flex flex-col md:flex-row pt-3">
+                <label className="mt-3 mr-20 w-auto">Certificate Name</label>
+                <input
+                  type="text"
+                  name={`certificates[${index}].name`}
+                  onChange={(e) => {
+                    const newCertificates = [...formData.certificates];
+                    newCertificates[index] = { ...newCertificates[index], name: e.target.value };
+                    setFormData({ ...formData, certificates: newCertificates });
+                  }}
+                  className="w-full md:w-full py-3 px-2 mt-3 mr-4 xl:block border-gray-200 rounded-lg text-sm"
+                  placeholder="Enter Certificate Name"
+                />
+              </div>
+
+              <div className="flex flex-col md:flex-row pt-3">
+                <label className="mt-3 mr-20 w-auto">Certificate Link</label>
+                <input
+                  type="url"
+                  name={`certificates[${index}].link`}
+                  onChange={(e) => {
+                    const newCertificates = [...formData.certificates];
+                    newCertificates[index] = { ...newCertificates[index], link: e.target.value };
+                    setFormData({ ...formData, certificates: newCertificates });
+                  }}
+                  className="w-full md:w-full py-3 px-2 mt-3 mr-4 xl:block border-gray-200 rounded-lg text-sm"
+                  placeholder="Enter Certificate Link"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-4 pt-3">
+                <label className="mt-3">Issuer</label>
+                <select
+                  name={`certificates[${index}].issuer`}
+                  onChange={(e) => {
+                    const newCertificates = [...formData.certificates];
+                    newCertificates[index] = { ...newCertificates[index], issuer: e.target.value };
+                    setFormData({ ...formData, certificates: newCertificates });
+                  }}
+                  className="w-full md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+                >
+                  <option>- Select -</option>
+                  <option>Coursera</option>
+                  <option>Microsoft</option>
+                  <option>GUVI</option>
+                  <option>Great Learning</option>
+                  <option>Simplilearn</option>
+                  <option>Udemy</option>
+                  <option>Google</option>
+                  <option>Cisco</option>
+                  <option>Others</option>
+                </select>
+
+                <label className="mt-3">Issued Date</label>
+                <input
+                  type="month"
+                  name={`certificates[${index}].issuedDate`}
+                  onChange={(e) => {
+                    const newCertificates = [...formData.certificates];
+                    newCertificates[index] = { ...newCertificates[index], issuedDate: e.target.value };
+                    setFormData({ ...formData, certificates: newCertificates });
+                  }}
+                  className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+                />
+              </div>
+            </form>
+          </div>
+        ))}
+      </fieldset>
+      <hr />
+
+      {/* ---------------------------------------VOLUNTEERING------------------------------------------------- */}
+      <fieldset>
+        <div className="flex justify-between">
+          <legend className="pt-3 text-left font-medium text-2xl underline">Volunteering</legend>
+          <button type="button" onClick={addVolunteerForm} className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-black text-white shadow-sm">
+            <AddIcon /> ADD
+          </button>
+        </div>
+
+        {volunteerForms.map((form, index) => (
+          <div key={form.id}>
+            <form className="volunteer">
+              <div className="flex justify-end">
+                {volunteerForms.length > 1 && (
+                  <button type="button" onClick={() => removeVolunteerForm(form .id)} className="mt-3 px-3 py-3 rounded-lg text-sm text-red-500 border border-red-500">
+                    <Delete /> Delete
+                  </button>
+                )}
+              </div>
+              <div className="flex flex-col md:flex-row pt-3">
+                <label className="mt-3 mr-20">Organization</label>
+                <input
+                  type="text"
+                  name={`volunteering[${index}].organization`}
+                  onChange={(e) => {
+                    const newVolunteering = [...formData.volunteering];
+                    newVolunteering[index] = { ...newVolunteering[index], organization: e.target.value };
+                    setFormData({ ...formData, volunteering: newVolunteering });
+                  }}
+                  className="w-full md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+                  placeholder="Enter Organization Name"
+                />
+              </div>
+              <div className="flex flex-col md:flex-row pt-3">
+                <label className="mt-3 mr-16">Volunteer Role</label>
+                <input
+                  type="text"
+                  name={`volunteering[${index}].jobRole`}
+                  onChange={(e) => {
+                    const newVolunteering = [...formData.volunteering];
+                    newVolunteering[index] = { ...newVolunteering[index], jobRole: e.target.value };
+                    setFormData({ ...formData, volunteering: newVolunteering });
+                  }}
+                  className="w-full md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+                  placeholder="Enter Volunteer Role"
+                />
+              </div>
+              <div className="flex flex-col md:flex-row pt-3">
+                <label className="mt-3 mr-20">Description</label>
+                <textarea
+                  type="text"
+                  name={`volunteering[${index}].description`}
+                  onChange={(e) => {
+                    const newVolunteering = [...formData.volunteering];
+                    newVolunteering[index] = { ...newVolunteering[index], description: e.target.value };
+                    setFormData({ ...formData, volunteering: newVolunteering });
+                  }}
+                  className="w-full h-1/2 md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+                  placeholder="Enter Volunteering Description"
+                />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-4 pt-3 ">
+                <label className="mt-3">Start-Date</label>
+                <input
+                  type="month"
+                  name={`volunteering[${index}].startDate`}
+                  onChange={(e) => {
+                    const newVolunteering = [...formData.volunteering];
+                    newVolunteering[index] = { ...newVolunteering[index], startDate: e.target.value };
+                    setFormData({ ...formData, volunteering: newVolunteering });
+                  }}
+                  className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+                />
+                <label className="mt-3">End-Date</label>
+                <input
+                  type="month"
+                  name={`volunteering[${index}].endDate`}
+                  onChange={(e) => {
+                    const newVolunteering = [...formData.volunteering];
+                    newVolunteering[index] = { ...newVolunteering[index], endDate: e.target.value };
+                    setFormData({ ...formData, volunteering: newVolunteering });
+                  }}
+                  className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+                />
+              </div>
+            </form>
+          </div>
+        ))}
+      </fieldset>
+      <hr />
+
+      {/* ------------------------------------SKILLS & INTERESTS----------------------------------------------------- */}
+      <fieldset>
+        <div className="flex justify-between">
+          <legend className="pt-3 text-left font-medium text-2xl underline">Skills and Interest</legend>
+          <button type="button" onClick={add_si} className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-black text-white shadow-sm">
+            <AddIcon /> ADD
+          </button>
+        </div>
+
+        <form className="skill">
+          <div className="flex flex-col md:flex-row pt-3">
+            <input
+ type="text"
+              onChange={(e) => setaddsivalue(e.target.value)}
+              value={addsivalue}
+              className="w-full md:w-full py-3 px-2 mt-3 mr-4 xl:block border-gray-200 rounded-lg text-sm"
+              placeholder="Enter Skills and Interest"
+            />
+          </div>
+        </form>
+      </fieldset>
+
+      <div id="si-container">
+        <ul>
+          {sidata.map((currsi, index) => (
+            <li key={index}>
+              <button type='button' onClick={() => remove_si(index)} className='mt-3 px-2 py-2 rounded-lg border border-gray-500 text-sm text-black-500'>
+                {currsi} <Close />
               </button>
-            )}
-            </div>
-      <div className="flex flex-col md:flex-row pt-3">
-      <label className="mt-3 mr-20">Project Title</label>
-      <input
-          type="text"
-          class="w-full md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-          placeholder="Enter Project Title"
-        />
+            </li>
+          ))}
+        </ul>
       </div>
-      <div className="flex flex-col md:flex-row pt-3">
-      <label className="mt-3 mr-20">Description</label>
-      <textarea
-          type="text"
-          class="w-full h-1/2 md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-          placeholder="Enter Project Description">
-        </textarea>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-4 pt-3 ">
 
-        <label className="mt-3">Start-Date</label>
-        <input
-          type="month"
-          class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-        />
-        
-        <label className="mt-3">End-Date</label>
-        <input
-          type="month"
-          class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-        />
-      </div>
-      </form>
-      </div>
-    ))}
-   
-    </fieldset>
-    <hr/>
+      <hr />
 
-   {/* ------------------------------------CERTIFICATIONS---------------------------------------------------- */}
+      {/* -----------------------------------AWARDS & HIGHLIGHTS----------------------------------------------------- */}
+      <fieldset>
+        <div className="flex justify-between">
+          <legend className="pt-3 text-left font-medium text-2xl underline">Awards and Highlights</legend>
+          <button type="button" onClick={add_ah} className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-black text-white shadow-sm">
+            <AddIcon /> ADD
+          </button>
+        </div>
 
-   <fieldset>
-   
-   <div className="flex justify-between">
-   <legend className="pt-3 text-left font-medium text-2xl underline">Certifications</legend>
-   <button type="button" 
-   onClick={addCertificateForm}
-   class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
- <AddIcon></AddIcon> ADD
-</button>
-   </div>
-   {certificateForms.map((form, index) => (
-    <div key={form.id}>
-      <form className="certificate">
-      <div className="flex justify-end">
-            {certificateForms.length > 1 && (
-              <button
-                type="button"
-                onClick={() => removeCertificateForm(form.id)}
-                className="mt-3 px-3 py-3 rounded-lg text-sm text-red-500 border border-red-500"
-              > <Delete></Delete>
-                Delete
+        <form className="award">
+          <div className="flex flex-col md:flex-row pt-3">
+            <input
+              type="text"
+              onChange={(e) => setaddahvalue(e.target.value)}
+              value={addahvalue}
+              className="w-full md:w-full py-3 px-2 mt-3 mr-4 xl:block border-gray-200 rounded-lg text-sm"
+              placeholder="Enter Awards and Highlights"
+            />
+          </div>
+        </form>
+      </fieldset>
+
+      <div id="ah-container">
+        <ul>
+          {ahdata.map((currah, index) => (
+            <li key={index}>
+              <button type='button' onClick={() => remove_ah(index)} className='mt-3 px-2 py-2 rounded-lg border border-gray-500 text-sm text-black-500'>
+                {currah} <Close />
               </button>
-            )}
-            </div>
-      <div className="flex flex-col md:flex-row pt-3">
-      <label className="mt-3 mr-20 w-auto">Certificate Name</label>
-      <input
-          type="text"
-          class="w-full md:w-full py-3 px-2 mt-3 mr-4 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-          placeholder="Enter Certificate Name"
-
-        />
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <div className="flex flex-col md:flex-row pt-3">
-      <label className="mt-3 mr-20 w-auto">Certificate Link</label>
-      <input
-          type="url"
-          class="w-full md:w-full py-3 px-2 mt-3 mr-4 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-          placeholder="Enter Certificate Link"
+      <hr />
+      {/* ---------------------------------GENERATE BUTTON--------------------------------------------------- */}
 
-        />
+      <div className="flex justify-center items-center">
+        <button type="button" 
+          onClick={handleGenerateResume}
+          className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-black text-white shadow-sm">
+          GENERATE RESUME
+        </button>
       </div>
 
-      
-      
-      <div className="grid grid-cols-1 md:grid-cols-4 pt-3">
-      <label className="mt-3">Issuer</label>
-      <select 
-        class="w-full md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none">
-         <option>- Select -</option>
-         <option>Coursera</option>
-         <option>Microsoft</option>
-         <option>GUVI</option>
-         <option>Great Learning</option>
-         <option>Simplilearn</option>
-         <option>Udemy</option>
-         <option>Google</option>
-         <option>Cisco</option>
-         <option>Others</option>
-        </select>
-
-        <label className="mt-3">Issued Date</label>
-        <input
-          type="month"
-          class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-        />
-      </div>
-      </form>
-
-      </div>
-    ))}
-    </fieldset>
-    <hr/>
-   {/* ---------------------------------------VOLUNTEERING------------------------------------------------- */}
-
-   <fieldset>
-   
-   <div className="flex justify-between">
-   <legend className="pt-3 text-left font-medium text-2xl underline">Volunteering</legend>
-   <button type="button" 
-   onClick={addVolunteerForm}
-   className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
- <AddIcon></AddIcon> ADD
-</button>
-   </div>
-
-   {volunteerForms.map((form, index) => (
-    <div key={form.id}>
-      <form className="volunteer">
-      <div className="flex justify-end">
-            {volunteerForms.length > 1 && (
-              <button
-                type="button"
-                onClick={() => removeVolunteerForm(form.id)}
-                className="mt-3 px-3 py-3 rounded-lg text-sm text-red-500 border border-red-500"
-              > <Delete></Delete>
-                Delete
-              </button>
-            )}
-            </div>
-      <div className="flex flex-col md:flex-row pt-3">
-      <label className="mt-3 mr-20">Organization </label>
-      <input
-          type="text"
-          className="w-full md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-          placeholder="Enter Organization Name"
-        />
-      </div>
-      <div className="flex flex-col md:flex-row pt-3">
-      <label className="mt-3 mr-28">Job Role</label>
-      <input
-          type="text"
-          class="w-full md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-          placeholder="Enter Volunteer Role"
-        />
-      </div>
-      <div className="flex flex-col md:flex-row pt-3">
-      <label className="mt-3 mr-20">Description</label>
-      <textarea
-          type="text"
-          className="w-full h-1/2 md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-          placeholder="Enter Volunteering Description">
-        </textarea>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-4 pt-3 ">
-
-        <label className="mt-3">Start-Date</label>
-        <input
-          type="month"
-          className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-        />  
-        
-        <label className="mt-3">End-Date</label>
-        <input
-          type="month"
-          className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-        />
-      </div>
-      </form>
-      
-      </div>
-    ))}
-    </fieldset>
-    <hr/>
-
-   {/* -----------------------------------SKILLS & INTERESTS----------------------------------------------------- */}
-
-  
-   <fieldset>
-   
-   <div className="flex justify-between">
-   <legend className="pt-3 text-left font-medium text-2xl underline">Skills and Interest</legend>
-   <button type="button" 
-    onClick={() => add_si()}
-   className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
- <AddIcon></AddIcon> ADD
-</button>
-   </div>
-
-      <form className="skill">
-      <div className="flex flex-col md:flex-row pt-3">
-      <input
-          type="text"
-          onChange={(e)=>setaddsivalue(e.target.value)}
-          value={addsivalue}
-          className="w-full md:w-full py-3 px-2 mt-3 mr-4 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-          placeholder="Enter Skills and Interest"/>
-      </div>
-      </form>
-    </fieldset>
-
-<div id="si-container">
-<ul>
-        {
-          sidata.map((currsi,index)=>{
-            return(
-              <ul>
-                <li>
-                  <button type='button' 
-                  onClick={() => remove_si()} 
-                  className='mt-3 px-2 py-2 rounded-lg border border-gray-500 text-sm text-black-500'>  {currsi} <Close></Close> </button>
-                </li>
-              </ul>
-            )
-          })
-        }
-    </ul>
-</div>
-
-    <hr/>
-
-  
-   {/* -----------------------------------AWARDS & HIGHLIGHTS----------------------------------------------------- */}
-
-   <fieldset>
-   
-   <div className="flex justify-between">
-   <legend className="pt-3 text-left font-medium text-2xl underline">Awards and Highlights</legend>
-   <button type="button" 
-   onClick={() => add_ah()}
-   className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
- <AddIcon></AddIcon> ADD
-</button>
-   </div>
-
-      <form className="award">
-      <div className="flex flex-col md:flex-row pt-3">
-      <input
-          type="text"
-          onChange={(e)=>setaddahvalue(e.target.value)}
-          value={addahvalue}
-          className="w-full md:w-full py-3 px-2 mt-3 mr-4 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-          placeholder="Enter Awards and Highlights"/>
-      </div>
-      </form>
-    </fieldset>
-
-    <div id="ah-container">
-<ul>
-        {
-          ahdata.map((currah,index)=>{
-            return(
-              <ul>
-                <li>
-                  <button type='button' 
-                  onClick={() => remove_ah()} 
-                  className='mt-3 px-2 py-2 rounded-lg border border-gray-500 text-sm text-black-500'>  {currah} <Close></Close> </button>
-                </li>
-              </ul>
-            )
-          })
-        }
-    </ul>
-</div>
-
-    <hr/>
-
-{/* ---------------------------------GENERATE BUTTON--------------------------------------------------- */}
-
-<div className="flex justify-center items-center">
-  <button type="button" 
-  onClick={()=> GenerateResume()}
-  className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
-    GENERATE RESUME
-  </button>
-</div>
-
-<div className="bg-stone-50 mt-5" id="my-resume">
-
-</div>
-
+      <div className="bg-stone-50 mt-5 p-5" id="my-resume" dangerouslySetInnerHTML={{ __html: generatedResume }}></div>
     </div>
   );
 };

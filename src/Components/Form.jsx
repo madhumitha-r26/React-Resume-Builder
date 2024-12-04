@@ -52,6 +52,10 @@ const Form = () => {
     event.target.parentElement.remove();
   }
 
+  const GenerateResume=()=>{
+    alert("resume generated successfully")
+  }
+
   
 
   
@@ -67,6 +71,7 @@ const Form = () => {
       <label className="mt-3">Name</label>
       <input
           type="text"
+          id="h-name"
           class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
           placeholder="Your Name"
         />
@@ -74,6 +79,7 @@ const Form = () => {
         <label className="mt-3">Job Title</label>
         <input
           type="text"
+          id="h-jt"
           class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
           placeholder="Your Job Title"
         />
@@ -81,6 +87,7 @@ const Form = () => {
         <label className="mt-3">Email Id</label>
         <input
           type="email"
+          id="h-email"
           class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
           placeholder="Your Email"
         />
@@ -88,10 +95,21 @@ const Form = () => {
         <label className="mt-3">Phone Number</label>
         <input
           type="tel"
+          id="h-phone"
           class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
           placeholder="1234-567-890"
         />
       </div>
+
+      <div className="flex flex-col md:flex-row pt-3">
+                <label className="mt-3 mr-8">Career Objective</label>
+                <textarea
+                  type="text"
+                  className="w-full md:w-10/12 h-24 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+                  placeholder="Enter Career Objective"
+                ></textarea>
+              </div>
+      
       </form>
     </fieldset>
     <hr/>
@@ -590,9 +608,15 @@ const Form = () => {
 {/* ---------------------------------GENERATE BUTTON--------------------------------------------------- */}
 
 <div className="flex justify-center items-center">
-  <button type="button" className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
+  <button type="button" 
+  onClick={()=> GenerateResume()}
+  className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
     GENERATE RESUME
   </button>
+</div>
+
+<div className="bg-stone-50 mt-5" id="my-resume">
+
 </div>
 
     </div>

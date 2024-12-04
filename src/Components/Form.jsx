@@ -64,7 +64,7 @@ const Form = () => {
   
   {/* -------------------------------HEADING--------------------------------------------------------- */}
    
-    <fieldset>
+  <fieldset>
       <legend className="pt-3 text-left font-medium text-2xl underline">Heading</legend>
       <form className="heading">
       <div className="grid grid-cols-1 md:grid-cols-4 pt-3 ">
@@ -114,9 +114,8 @@ const Form = () => {
     </fieldset>
     <hr/>
   
-  {/* -------------------------------LINKS--------------------------------------------------------- */}
-
-  <fieldset>
+    {/* -------------------------------LINKS--------------------------------------------------------- */}
+    <fieldset>
       <legend className="pt-3 text-left font-medium text-2xl underline">Links</legend>
       <form className="links">
       <div className="grid grid-cols-1 md:grid-cols-4 pt-3 ">
@@ -151,7 +150,7 @@ const Form = () => {
       </form>
     </fieldset>
     <hr/>
-  
+
    {/* ------------------------------------EDUCATION---------------------------------------------------- */}
 
    <fieldset>

@@ -53,7 +53,7 @@ const Form = () => {
   }
 
   const GenerateResume=()=>{
-    alert("resume generated successfully")
+    console.log("resume generated successfully")
   }
 
   
@@ -67,7 +67,7 @@ const Form = () => {
     <fieldset>
       <legend className="pt-3 text-left font-medium text-2xl underline">Heading</legend>
       <form className="heading">
-      <div class="grid grid-cols-1 md:grid-cols-4 pt-3 ">
+      <div className="grid grid-cols-1 md:grid-cols-4 pt-3 ">
       <label className="mt-3">Name</label>
       <input
           type="text"
@@ -80,7 +80,7 @@ const Form = () => {
         <input
           type="text"
           id="h-jt"
-          class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
+          className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
           placeholder="Your Job Title"
         />
 
@@ -88,7 +88,7 @@ const Form = () => {
         <input
           type="email"
           id="h-email"
-          class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
+          className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
           placeholder="Your Email"
         />
         
@@ -102,10 +102,10 @@ const Form = () => {
       </div>
 
       <div className="flex flex-col md:flex-row pt-3">
-                <label className="mt-3 mr-8">Career Objective</label>
+                <label className="mt-3 mr-40">Career Objective</label>
                 <textarea
                   type="text"
-                  className="w-full md:w-10/12 h-24 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
+                  className="w-full md:w-9/12 h-24 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
                   placeholder="Enter Career Objective"
                 ></textarea>
               </div>
@@ -119,32 +119,32 @@ const Form = () => {
   <fieldset>
       <legend className="pt-3 text-left font-medium text-2xl underline">Links</legend>
       <form className="links">
-      <div class="grid grid-cols-1 md:grid-cols-4 pt-3 ">
+      <div className="grid grid-cols-1 md:grid-cols-4 pt-3 ">
       <label className="mt-3">LinkedIn</label>
       <input
           type="url"
-          class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
+          className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
           placeholder="https://www.linkedin.com/in/"
         />
 
         <label className="mt-3">GitHub</label>
         <input
           type="url"
-          class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
+          className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
           placeholder="https://github.com/"
         />
 
         <label className="mt-3">Website</label>
         <input
           type="url"
-          class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
+          className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
           placeholder="https://www.yourwebsite.com/"
         />
         
         <label className="mt-3">Behance</label>
         <input
           type="url"
-          class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
+          className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
           placeholder="https://www.behance.net/"
         />
       </div>
@@ -235,7 +235,7 @@ const Form = () => {
    <legend className="pt-3 text-left font-medium text-2xl underline">Experience</legend>
    <button type="button" 
    onClick={addExperienceForm}
-   class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
+   className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
  <AddIcon></AddIcon> ADD
 </button>
    </div>
@@ -255,7 +255,7 @@ const Form = () => {
             )}
             </div>
             
-            <div class="flex flex-col md:flex-row pt-3">
+            <div className="flex flex-col md:flex-row pt-3">
   <label className="mt-3 mr-24">Company</label>
   <input
       type="text"
@@ -263,7 +263,7 @@ const Form = () => {
       placeholder="Enter Company Name"
     />
   </div>
-  <div class="flex flex-col md:flex-row pt-3">
+  <div className="flex flex-col md:flex-row pt-3">
   <label className="mt-3 mr-28">Job Role</label>
   <input
       type="text"
@@ -271,7 +271,7 @@ const Form = () => {
       placeholder="Enter Job Role"
     />
   </div>
-  <div class="flex flex-col md:flex-row pt-3">
+  <div className="flex flex-col md:flex-row pt-3">
   <label className="mt-3 mr-20">Description</label>
   <textarea
       type="text"
@@ -279,7 +279,7 @@ const Form = () => {
       placeholder="Enter Job Description">       
        </textarea>
   </div>
-  <div class="grid grid-cols-1 md:grid-cols-4 pt-3 ">
+  <div className="grid grid-cols-1 md:grid-cols-4 pt-3 ">
 
     <label className="mt-3">Start-Date</label>
     <input
@@ -309,7 +309,7 @@ const Form = () => {
    <legend className="pt-3 text-left font-medium text-2xl underline">Projects</legend>
    <button type="button" 
    onClick={addProjectForm}
-   class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
+   className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
  <AddIcon></AddIcon> ADD
 </button>
    </div>
@@ -328,7 +328,7 @@ const Form = () => {
               </button>
             )}
             </div>
-      <div class="flex flex-col md:flex-row pt-3">
+      <div className="flex flex-col md:flex-row pt-3">
       <label className="mt-3 mr-20">Project Title</label>
       <input
           type="text"
@@ -336,7 +336,7 @@ const Form = () => {
           placeholder="Enter Project Title"
         />
       </div>
-      <div class="flex flex-col md:flex-row pt-3">
+      <div className="flex flex-col md:flex-row pt-3">
       <label className="mt-3 mr-20">Description</label>
       <textarea
           type="text"
@@ -344,7 +344,7 @@ const Form = () => {
           placeholder="Enter Project Description">
         </textarea>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-4 pt-3 ">
+      <div className="grid grid-cols-1 md:grid-cols-4 pt-3 ">
 
         <label className="mt-3">Start-Date</label>
         <input
@@ -391,7 +391,7 @@ const Form = () => {
               </button>
             )}
             </div>
-      <div class="flex flex-col md:flex-row pt-3">
+      <div className="flex flex-col md:flex-row pt-3">
       <label className="mt-3 mr-20 w-auto">Certificate Name</label>
       <input
           type="text"
@@ -401,7 +401,7 @@ const Form = () => {
         />
       </div>
 
-      <div class="flex flex-col md:flex-row pt-3">
+      <div className="flex flex-col md:flex-row pt-3">
       <label className="mt-3 mr-20 w-auto">Certificate Link</label>
       <input
           type="url"
@@ -413,7 +413,7 @@ const Form = () => {
 
       
       
-      <div class="grid grid-cols-1 md:grid-cols-4 pt-3">
+      <div className="grid grid-cols-1 md:grid-cols-4 pt-3">
       <label className="mt-3">Issuer</label>
       <select 
         class="w-full md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none">
@@ -449,7 +449,7 @@ const Form = () => {
    <legend className="pt-3 text-left font-medium text-2xl underline">Volunteering</legend>
    <button type="button" 
    onClick={addVolunteerForm}
-   class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
+   className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
  <AddIcon></AddIcon> ADD
 </button>
    </div>
@@ -468,15 +468,15 @@ const Form = () => {
               </button>
             )}
             </div>
-      <div class="flex flex-col md:flex-row pt-3">
+      <div className="flex flex-col md:flex-row pt-3">
       <label className="mt-3 mr-20">Organization </label>
       <input
           type="text"
-          class="w-full md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
+          className="w-full md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
           placeholder="Enter Organization Name"
         />
       </div>
-      <div class="flex flex-col md:flex-row pt-3">
+      <div className="flex flex-col md:flex-row pt-3">
       <label className="mt-3 mr-28">Job Role</label>
       <input
           type="text"
@@ -484,26 +484,26 @@ const Form = () => {
           placeholder="Enter Volunteer Role"
         />
       </div>
-      <div class="flex flex-col md:flex-row pt-3">
+      <div className="flex flex-col md:flex-row pt-3">
       <label className="mt-3 mr-20">Description</label>
       <textarea
           type="text"
-          class="w-full h-1/2 md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
+          className="w-full h-1/2 md:w-10/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
           placeholder="Enter Volunteering Description">
         </textarea>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-4 pt-3 ">
+      <div className="grid grid-cols-1 md:grid-cols-4 pt-3 ">
 
         <label className="mt-3">Start-Date</label>
         <input
           type="month"
-          class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
-        />
+          className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
+        />  
         
         <label className="mt-3">End-Date</label>
         <input
           type="month"
-          class="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
+          className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
         />
       </div>
       </form>
@@ -522,18 +522,18 @@ const Form = () => {
    <legend className="pt-3 text-left font-medium text-2xl underline">Skills and Interest</legend>
    <button type="button" 
     onClick={() => add_si()}
-   class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
+   className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
  <AddIcon></AddIcon> ADD
 </button>
    </div>
 
       <form className="skill">
-      <div class="flex flex-col md:flex-row pt-3">
+      <div className="flex flex-col md:flex-row pt-3">
       <input
           type="text"
           onChange={(e)=>setaddsivalue(e.target.value)}
           value={addsivalue}
-          class="w-full md:w-full py-3 px-2 mt-3 mr-4 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
+          className="w-full md:w-full py-3 px-2 mt-3 mr-4 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
           placeholder="Enter Skills and Interest"/>
       </div>
       </form>
@@ -568,18 +568,18 @@ const Form = () => {
    <legend className="pt-3 text-left font-medium text-2xl underline">Awards and Highlights</legend>
    <button type="button" 
    onClick={() => add_ah()}
-   class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
+   className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
  <AddIcon></AddIcon> ADD
 </button>
    </div>
 
       <form className="award">
-      <div class="flex flex-col md:flex-row pt-3">
+      <div className="flex flex-col md:flex-row pt-3">
       <input
           type="text"
           onChange={(e)=>setaddahvalue(e.target.value)}
           value={addahvalue}
-          class="w-full md:w-full py-3 px-2 mt-3 mr-4 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
+          className="w-full md:w-full py-3 px-2 mt-3 mr-4 xl:block border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none"
           placeholder="Enter Awards and Highlights"/>
       </div>
       </form>

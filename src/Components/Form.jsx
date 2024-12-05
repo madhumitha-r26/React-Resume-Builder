@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Form.css";
 import AddIcon from '@mui/icons-material/Add';
 import { Delete, Close } from "@mui/icons-material";
+import { GitHub, LinkedIn, Public } from "@mui/icons-material";
 
 const Form = () => {
   const useFormList = (initialState = [{ id: Date.now() }]) => {
@@ -31,18 +32,18 @@ const Form = () => {
     phone: '',
     careerObjective: '',
     links: {
-      linkedin: '',
-      github: '',
-      website: '',
-      behance: ''
+      LinkedIn: '',
+      Github: '',
+      Website: '',
+      Other_link: ''
     },
     education: [],
     experience: [],
     projects: [],
     certificates: [],
     volunteering: [],
-    skills: [],
-    awards: []
+    skills: [], 
+    awards: []  
   });
 
   const [addsivalue, setaddsivalue] = useState("");
@@ -72,56 +73,41 @@ const Form = () => {
   };
 
   const handleGenerateResume = () => {
-    const { name, jobTitle, email, phone, careerObjective, links, education, experience, projects, certificates, volunteering, skills, awards } = formData;
-
-    // Format the education, experience, projects, certificates, and volunteering for better readability
-    const formatList = (list) => list.map(item => `<li>${item}</li>`).join('');
-
     const resume = `
-      <h1 style="text-align:center">${name}</h1>
-      <p><strong>Job Title:</strong> ${jobTitle}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Phone:</strong> ${phone}</p>
-      <p><strong>Career Objective:</strong> ${careerObjective}</p>
-      <p><strong>LinkedIn:</strong> <a href="${links.linkedin}" target="_blank">${links.linkedin}</a></p>
-      <p><strong>GitHub:</strong> <a href="${links.github}" target="_blank">${links.github}</a></p>
-      <p><strong>Website:</strong> <a href="${links.website}" target="_blank">${links.website}</a></p>
-      <p><strong>Behance:</strong> <a href="${links.behance}" target="_blank">${links.behance}</a></p>
-      <h2>Education</h2>
-      <ul>${formatList(education)}</ul>
-      <h2>Experience</h2>
-      <ul>${formatList(experience)}</ul>
-      <h2>Projects</h2>
-      <ul>${formatList(projects)}</ul>
-      <h2> Certificates</h2>
-      <ul>${formatList(certificates)}</ul>
-      <h2>Volunteering</h2>
-      <ul>${formatList(volunteering)}</ul>
-      <h2>Skills</h2>
-      <p>${skills.join(', ')}</p>
-      <h2>Awards</h2>
-      <p>${awards.join(', ')}</p>
+      Name: ${formData.name} <br/> 
+      Job Title: ${formData.jobTitle} <br/>
+      Email: ${formData.email} <br/>
+      Phone: ${formData.phone} <br/>
+      Career Objective: ${formData.careerObjective} <br/>
+      Links: ${JSON.stringify(formData.links, null, 2)} <br/>
+      Education: ${JSON.stringify(formData.education, null, 2)} <br/>
+      Experience: ${JSON.stringify(formData.experience, null, 2)} <br/>
+      Projects: ${JSON.stringify(formData.projects, null, 2)} <br/>
+      Certificates: ${JSON.stringify(formData.certificates, null, 2)} <br/>
+      Volunteering: ${JSON.stringify(formData.volunteering, null, 2)} <br/>
+      Skills & Interests: ${sidata.join(', ')} <br/>
+      Awards & Highlights: ${ahdata.join(', ')}
     `;
-
     setGeneratedResume(resume);
   };
+
 
   const add_si = () => {
     if (addsivalue) {
       setsidata([...sidata, addsivalue]);
-      setaddsivalue("");
+      setaddsivalue(""); // Clear the input field
+    }
+  };
+  
+  const add_ah = () => {
+    if (addahvalue) {
+      setahdata([...ahdata, addahvalue]);
+      setaddahvalue(""); // Clear the input field
     }
   };
 
   const remove_si = (index) => {
     setsidata(sidata.filter((_, i) => i !== index));
-  };
-
-  const add_ah = () => {
-    if (addahvalue) {
-      setahdata([...ahdata, addahvalue]);
-      setaddahvalue("");
-    }
   };
 
   const remove_ah = (index) => {
@@ -139,6 +125,7 @@ const Form = () => {
             <input
               type="text"
               name="name"
+              id="hd_name"
               onChange={handleInputChange}
               className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
               placeholder="Your Name"
@@ -148,6 +135,7 @@ const Form = () => {
             <input
               type="text"
               name="jobTitle"
+              id="hd_jobtitle"
               onChange={handleInputChange}
               className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
               placeholder="Your Job Title"
@@ -193,7 +181,7 @@ const Form = () => {
             <label className="mt-3">LinkedIn</label>
             <input
               type="url"
-              name="linkedin"
+              name=""
               onChange={handleLinkChange}
               className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
               placeholder="https://www.linkedin.com/in/"
@@ -217,13 +205,13 @@ const Form = () => {
               placeholder="https://www.yourwebsite.com/"
             />
 
-            <label className="mt-3">Behance</label>
+            <label className="mt-3">other_link</label>
             <input
               type="url"
-              name="behance"
+              name="other_link"
               onChange={handleLinkChange}
               className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
-              placeholder="https://www.behance.net/"
+              placeholder="https://www.other_link.net/"
             />
           </div>
         </form>
@@ -756,6 +744,7 @@ const Form = () => {
       </div>
 
       <div className="bg-stone-50 mt-5 p-5" id="my-resume" dangerouslySetInnerHTML={{ __html: generatedResume }}></div>
+
     </div>
   );
 };

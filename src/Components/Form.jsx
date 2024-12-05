@@ -95,14 +95,14 @@ const Form = () => {
   const add_si = () => {
     if (addsivalue) {
       setsidata([...sidata, addsivalue]);
-      setaddsivalue(""); // Clear the input field
+      setaddsivalue(""); 
     }
   };
   
   const add_ah = () => {
     if (addahvalue) {
       setahdata([...ahdata, addahvalue]);
-      setaddahvalue(""); // Clear the input field
+      setaddahvalue("");
     }
   };
 

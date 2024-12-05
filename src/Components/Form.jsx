@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Form.css";
 import AddIcon from '@mui/icons-material/Add';
 import { Delete, Close } from "@mui/icons-material";
-import { GitHub, LinkedIn, Public } from "@mui/icons-material";
+
 
 const Form = () => {
   const useFormList = (initialState = [{ id: Date.now() }]) => {
@@ -52,7 +52,7 @@ const Form = () => {
   const [ahdata, setahdata] = useState([]);
   const [generatedResume, setGeneratedResume] = useState("");
 
-  // Handle input changes
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({

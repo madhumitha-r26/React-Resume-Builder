@@ -33,9 +33,9 @@ const Form = () => {
     careerObjective: '',
     links: {
       LinkedIn: '',
-      Github: '',
+      GitHub: '',
       Website: '',
-      Other_link: ''
+      OtherLink: ''
     },
     education: [],
     experience: [],
@@ -181,7 +181,7 @@ const Form = () => {
             <label className="mt-3">LinkedIn</label>
             <input
               type="url"
-              name=""
+              name="LinkedIn"
               onChange={handleLinkChange}
               className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
               placeholder="https://www.linkedin.com/in/"
@@ -190,7 +190,7 @@ const Form = () => {
             <label className="mt-3">GitHub</label>
             <input
               type="url"
-              name="github"
+              name="GitHub"
               onChange={handleLinkChange}
               className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
               placeholder="https://github.com/"
@@ -199,16 +199,16 @@ const Form = () => {
             <label className="mt-3">Website</label>
             <input
               type="url"
-              name="website"
+              name="Website"
               onChange={handleLinkChange}
               className=" w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
               placeholder="https://www.yourwebsite.com/"
             />
 
-            <label className="mt-3">other_link</label>
+            <label className="mt-3">Other Link</label>
             <input
               type="url"
-              name="other_link"
+              name="OtherLink"
               onChange={handleLinkChange}
               className="w-full md:w-11/12 py-3 px-2 mt-3 xl:block border-gray-200 rounded-lg text-sm"
               placeholder="https://www.other_link.net/"

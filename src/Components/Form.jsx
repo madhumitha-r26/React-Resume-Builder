@@ -74,19 +74,19 @@ const Form = () => {
 
   const handleGenerateResume = () => {
     const resume = `
-      Name: ${formData.name} <br/> 
-      Job Title: ${formData.jobTitle} <br/>
-      Email: ${formData.email} <br/>
-      Phone: ${formData.phone} <br/>
-      Career Objective: ${formData.careerObjective} <br/>
-      Links: ${JSON.stringify(formData.links, null, 2)} <br/>
-      Education: ${JSON.stringify(formData.education, null, 2)} <br/>
-      Experience: ${JSON.stringify(formData.experience, null, 2)} <br/>
-      Projects: ${JSON.stringify(formData.projects, null, 2)} <br/>
-      Certificates: ${JSON.stringify(formData.certificates, null, 2)} <br/>
-      Volunteering: ${JSON.stringify(formData.volunteering, null, 2)} <br/>
-      Skills & Interests: ${sidata.join(', ')} <br/>
-      Awards & Highlights: ${ahdata.join(', ')}
+      <b>Name:</b> ${formData.name} <br/> 
+      <b>Job Title:</b> ${formData.jobTitle} <br/>
+      <b>Email:</b> ${formData.email} <br/>
+      <b>Phone:</b> ${formData.phone} <br/>
+      <b>Career Objective:</b> ${formData.careerObjective} <br/>
+      <b>Links:</b> ${JSON.stringify(formData.links, null, 2)} <br/>
+      <b>Education:</b> ${JSON.stringify(formData.education, null, 2)} <br/>
+      <b>Experience:</b> ${JSON.stringify(formData.experience, null, 2)} <br/>
+      <b>Projects:</b> ${JSON.stringify(formData.projects, null, 2)} <br/>
+      <b>Certificates:</b> ${JSON.stringify(formData.certificates, null, 2)} <br/>
+      <b>Volunteering:</b> ${JSON.stringify(formData.volunteering, null, 2)} <br/>
+      <b>Skills & Interests:</b> ${sidata.join(', ')} <br/>
+      <b>Awards & Highlights:</b> ${ahdata.join(', ')}
     `;
     setGeneratedResume(resume);
   };
